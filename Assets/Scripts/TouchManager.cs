@@ -37,7 +37,7 @@ public class TouchManager : MonoBehaviour
             if(_GameManager.Instance.selectedBlock != null)
             {
                 //We now have a Block Selected
-                Debug.Log("I Hit " + hit.collider.gameObject.name);
+                //Debug.Log("I Hit " + hit.collider.gameObject.name);
                 _GameManager.Instance.ClickedBlock(_GameManager.Instance.selectedBlock);
             }
         }

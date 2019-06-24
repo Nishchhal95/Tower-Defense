@@ -467,7 +467,38 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3841276098123251242}
+  - {fileID: 6931038605718336081}
   m_Father: {fileID: 3841276097472732295}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3314829863516900416
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6931038605718336081}
+  m_Layer: 0
+  m_Name: BulletSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6931038605718336081
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3314829863516900416}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.46, z: 0.9799998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8945062367270076258}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3618815504214432088
@@ -552,6 +583,13 @@ MonoBehaviour:
     type: 3}
   weaponRadius: 2
   rotatingPivot: {fileID: 8945062367270076258}
+  closestEnemy: {fileID: 0}
+  startingPivotRotation: {x: 0, y: 0, z: 0, w: 0}
+  bulletSpawnPoint: {fileID: 6931038605718336081}
+  bulletPrefab: {fileID: 5599825185512102651, guid: 4469f689d96d0a74491108b7f2d24bd8,
+    type: 3}
+  shootRate: 1
+  turnSpeed: 10
 --- !u!1 &3841276097472732294
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     [Range(0, 100)]
     [SerializeField] private float speed = 10f;
 
+    public GameObject destroyEffect;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,5 +44,13 @@ public class Enemy : MonoBehaviour
         //var targetRotation = Quaternion.LookRotation(Waypoints.Instance.wayPoints[currentWayPointIndex].position - transform.position);
 
         //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        //TODO : We need a health mechanism
+        GameObject destEffect = Instantiate(destroyEffect, transform.position, Quaternion.identity);
+        Destroy(destEffect, 2f);
+        Destroy(gameObject);
     }
 }

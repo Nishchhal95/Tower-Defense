@@ -12,21 +12,27 @@ public class Weapon : MonoBehaviour
     public Transform rotatingPivot;
     public Enemy closestEnemy = null;
     public Quaternion startingPivotRotation;
-    //private bool enableRadiusGizmo;
+    public Transform bulletSpawnPoint;
+    public Bullet bulletPrefab;
+
+    //One bulle every shootRade of a second
+    public float shootRate = 1f;
+    private float currentShootRate = 0;
+
+    public float turnSpeed = 5f;
 
     private float timeLeftToSpawn;
     private bool startingSpawn = false;
     private bool spawned = false;
     private GameObject spawnedEffect;
-    //[SerializeField]private float remainingPercentage;
 
     // Start is called before the first frame update
     void Start()
     {
         gameObject.AddComponent<WeaponGizmo>().radius = weaponRadius;
         startingPivotRotation = rotatingPivot.rotation;
-        //Starting Rotation
-        //DefaultRotation();
+        //Only If we want to delay the first shot
+        //currentShootRate = shootRate;
     }
 
     // Update is called once per frame
@@ -49,19 +55,27 @@ public class Weapon : MonoBehaviour
             DetectEnemies();
         }
 
-        if(closestEnemy == null)
+        if (closestEnemy != null)
         {
-            rotatingPivot.rotation = startingPivotRotation;
+            //Shooting
+            currentShootRate -= Time.deltaTime;
+            if(currentShootRate <= 0)
+            {
+                Shoot();
+            }
+
+            //Rotation
+            Vector3 dir = closestEnemy.transform.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            Vector3 rotation = Quaternion.Lerp(rotatingPivot.rotation, lookRotation, Time.deltaTime * turnSpeed).eulerAngles;
+            rotatingPivot.rotation = Quaternion.Euler(0f, rotation.y, 0f);
         }
 
-        //if(closestEnemy != null)
-        //{
-        //    Quaternion originalRot = rotatingPivot.transform.rotation;
-        //    rotatingPivot.LookAt(closestEnemy.transform);
-        //    Quaternion targetRotation = rotatingPivot.transform.rotation;
-        //    rotatingPivot.transform.rotation = originalRot;
-        //    rotatingPivot.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2);
-        //}
+        else
+        {
+            Vector3 rotation = Quaternion.Lerp(rotatingPivot.rotation, startingPivotRotation, Time.deltaTime * turnSpeed).eulerAngles;
+            rotatingPivot.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+        }
     }
 
     public void Spawning()
@@ -166,7 +180,7 @@ public class Weapon : MonoBehaviour
 
     private void RotateToClosestEnemy(Enemy enemy)
     {
-        rotatingPivot.LookAt(enemy.transform);
+        
     }
 
     private void DefaultRotation()
@@ -194,6 +208,14 @@ public class Weapon : MonoBehaviour
         }
 
         transform.LookAt(nearestPath.transform);
+    }
+
+    private void Shoot()
+    {
+        currentShootRate = shootRate;
+
+        Bullet bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+        bullet.SetTarget(closestEnemy.transform);
     }
 
     //Faltu Funnctions
