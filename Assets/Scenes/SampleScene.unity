@@ -7270,7 +7270,11 @@ MonoBehaviour:
   enemyPrefab: {fileID: 3166486506593779926, guid: c7d0bd6d23716604f857a41b9f77fc3e,
     type: 3}
   enemySpawnTransform: {fileID: 1862538870}
+<<<<<<< HEAD
   timeGapBetweenEnemies: 0.4
+=======
+  timeGapBetweenEnemies: 0.3
+>>>>>>> e7631d2481bbf9bf701ef7ee73405fdd49e5c657
   timeGapBetweenWaves: 5
   currenTimeGapForWaves: 0
 --- !u!114 &797664160
