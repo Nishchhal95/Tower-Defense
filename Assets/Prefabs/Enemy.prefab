@@ -320,6 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63a0611d28b96914197072bd26db4314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 100
   currentWayPointIndex: 0
   speed: 2
   destroyEffect: {fileID: 3726551015272961968, guid: 976e1ff5405603b4fac669a97f0dc6ef,
@@ -5017,7 +5018,7 @@ ParticleSystem:
 --- !u!199 &3166486506638194240
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}

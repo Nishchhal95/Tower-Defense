@@ -5,7 +5,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private float bulletSpeed = 12f;
-    private int damage = 10;
+    private int damage = 50;
     private Rigidbody rb;
     private Transform target;
     public GameObject impactEffectPrefab;

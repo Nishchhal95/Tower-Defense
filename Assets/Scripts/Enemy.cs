@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public float health = 100;
     private Transform target;
     [SerializeField]private int currentWayPointIndex = 0;
 
@@ -51,6 +52,10 @@ public class Enemy : MonoBehaviour
         //TODO : We need a health mechanism
         GameObject destEffect = Instantiate(destroyEffect, transform.position, Quaternion.identity);
         Destroy(destEffect, 2f);
-        Destroy(gameObject);
+        health = health - damage;
+        if(health<=0)
+        { Destroy(gameObject); }
+        //IF COndition for health
+        //If falls below 0 then do this
     }
 }
