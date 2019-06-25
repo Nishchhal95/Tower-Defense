@@ -43,6 +43,6 @@ public class WaveManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        GameObject enemy = Instantiate(enemyPrefab, enemySpawnTransform.position, Quaternion.identity);
+        GameObject enemy = Instantiate(enemyPrefab, enemySpawnTransform.position, Quaternion.identity, _GameManager.Instance.enemyHolder);
     }
 }

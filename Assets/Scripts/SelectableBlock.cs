@@ -29,13 +29,16 @@ public class SelectableBlock : MonoBehaviour
 
         Vector3 weaponPos = pointToPlaceWeapon + new Vector3(0, _GameManager.Instance.GetWeaponHeight(weapon) / 2, 0);
 
-        SpawnWeapon(weapon, weaponPos, Quaternion.identity);
+        holdingWeapon = SpawnWeapon(weapon, weaponPos, Quaternion.identity);
+
     }
 
-    private void SpawnWeapon(Weapon weapon, Vector3 pos, Quaternion rot)
+    private Weapon SpawnWeapon(Weapon weapon, Vector3 pos, Quaternion rot)
     {
-        Weapon wp = Instantiate(weapon, pos, rot);
+        Weapon wp = Instantiate(weapon, pos, rot, _GameManager.Instance.weaponHolder);
 
         wp.Spawning();
+
+        return wp;
     }
 }

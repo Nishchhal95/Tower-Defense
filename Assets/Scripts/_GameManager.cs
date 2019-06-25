@@ -9,6 +9,8 @@ public class _GameManager : MonoBehaviour
 
     public SelectableBlock selectedBlock = null;
 
+    public Transform enemyHolder, weaponHolder, bulletHolder;
+
     private void Awake()
     {
         if(Instance == null)

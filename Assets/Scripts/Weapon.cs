@@ -214,7 +214,7 @@ public class Weapon : MonoBehaviour
     {
         currentShootRate = shootRate;
 
-        Bullet bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+        Bullet bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity, _GameManager.Instance.bulletHolder);
         bullet.SetTarget(closestEnemy.transform);
     }
 
