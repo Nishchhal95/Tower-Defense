@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Weapon : MonoBehaviour
+public class Weapon : MonoBehaviour, IShootable
 {
+    public string weaponName;
     public float timeToConstruct;
     public float damage;
     public GameObject spawnEffect;
@@ -12,31 +13,29 @@ public class Weapon : MonoBehaviour
     public Transform rotatingPivot;
     public Enemy closestEnemy = null;
     public Quaternion startingPivotRotation;
-    public Transform bulletSpawnPoint;
+    public Transform bulletSpawnPointParent;
     public Bullet bulletPrefab;
 
     //One bulle every shootRade of a second
     public float shootRate = 1f;
-    private float currentShootRate = 0;
+    public float currentShootRate = 0;
 
     public float turnSpeed = 5f;
 
-    private float timeLeftToSpawn;
-    private bool startingSpawn = false;
-    private bool spawned = false;
-    private GameObject spawnedEffect;
+    public float timeLeftToSpawn;
+    public bool startingSpawn = false;
+    public bool spawned = false;
+    public GameObject spawnedEffect;
 
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         gameObject.AddComponent<WeaponGizmo>().radius = weaponRadius;
         startingPivotRotation = rotatingPivot.rotation;
-        //Only If we want to delay the first shot
-        //currentShootRate = shootRate;
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if(startingSpawn)
         {
@@ -117,65 +116,14 @@ public class Weapon : MonoBehaviour
         }
     }
 
-    private void SetupSpawnEffect()
+    public virtual void SetupSpawnEffect()
     {
-        if (spawnEffect != null)
-        {
-            spawnedEffect = Instantiate(spawnEffect, transform.position, Quaternion.identity);
-            ParticleSystem particleSystem = spawnedEffect.GetComponent<ParticleSystem>();
-            ParticleSystem.MainModule mainModule = particleSystem.main;
-            mainModule.duration = timeToConstruct;
-            particleSystem.Play();
-        }
+        Debug.Log("SetupSpawnEffect");
     }
 
-    private void DetectEnemies()
+    public virtual void DetectEnemies()
     {
-        //TODO : Currently we are not using any layermask, but we need to use one
-        //We got an array for the nearest 
-        Collider[] overlappingColliders = Physics.OverlapSphere(transform.position, weaponRadius);
-        if (overlappingColliders == null || overlappingColliders.Length == 0)
-        {
-            //Nothing nearby
-            closestEnemy = null;
-            return;
-        }
-
-        List<Enemy> nearbyEnemies = new List<Enemy>();
-
-        for (int i = 0; i < overlappingColliders.Length; i++)
-        {
-            Enemy enemy = overlappingColliders[i].GetComponentInParent<Enemy>();
-            if (enemy != null)
-            {
-                nearbyEnemies.Add(enemy);
-            }
-        }
-
-        if (nearbyEnemies == null || nearbyEnemies.Count == 0)
-        {
-            //No enemies nearby
-            closestEnemy = null;
-            return;
-        }
-
-        Enemy nearestEnemy = null;
-        float smallestDistance = Mathf.Infinity;
-        for (int i = 0; i < nearbyEnemies.Count; i++)
-        {
-            float distance = Vector2.Distance(transform.position, nearbyEnemies[i].transform.position);
-            if(distance < smallestDistance)
-            {
-                nearestEnemy = nearbyEnemies[i];
-                smallestDistance = distance;
-            }
-        }
-
-        closestEnemy = nearestEnemy;
-
-        //TODO : Add Smooth rotation 
-        RotateToClosestEnemy(closestEnemy);
-
+        Debug.Log("Detect Enemies");
     }
 
     private void RotateToClosestEnemy(Enemy enemy)
@@ -210,16 +158,13 @@ public class Weapon : MonoBehaviour
         transform.LookAt(nearestPath.transform);
     }
 
-    private void Shoot()
+    public virtual void Shoot()
     {
-        currentShootRate = shootRate;
-
-        Bullet bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity, _GameManager.Instance.bulletHolder);
-        bullet.SetTarget(closestEnemy.transform);
+        Debug.Log("Shoot");
     }
 
     //Faltu Funnctions
-    private float GetPercentageRemainingToSpawn()
+    public float GetPercentageRemainingToSpawn()
     {
         //remainingPercentage = 
         return ((100 / timeToConstruct) * timeLeftToSpawn);

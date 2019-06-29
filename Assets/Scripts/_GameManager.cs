@@ -7,9 +7,11 @@ public class _GameManager : MonoBehaviour
     public static _GameManager Instance;
     public Weapon selectedWeapon;
 
-    public SelectableBlock selectedBlock = null;
+    public IWeaponPlaceable selectedBlock = null;
 
     public Transform enemyHolder, weaponHolder, bulletHolder;
+
+    public List<Weapon> weaponList = new List<Weapon>();
 
     private void Awake()
     {
@@ -36,7 +38,7 @@ public class _GameManager : MonoBehaviour
         
     }
 
-    public void ClickedBlock(SelectableBlock blockSelected)
+    public void ClickedBlock(IWeaponPlaceable blockSelected)
     {
         Weapon selectedWeapon = GetSelectedWeapon();
 

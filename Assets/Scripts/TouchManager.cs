@@ -32,7 +32,7 @@ public class TouchManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            _GameManager.Instance.selectedBlock = hit.collider.gameObject.GetComponent<SelectableBlock>();
+            _GameManager.Instance.selectedBlock = hit.collider.gameObject.GetComponent<IWeaponPlaceable>();
 
             if(_GameManager.Instance.selectedBlock != null)
             {

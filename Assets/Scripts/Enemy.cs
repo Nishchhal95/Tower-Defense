@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable<int>, IHealthable<int>
 {
-    public float health = 100;
+    public int health { get; set; }
+    public int maxHealth { get; set; }
     private Transform target;
     [SerializeField]private int currentWayPointIndex = 0;
 
@@ -13,10 +15,20 @@ public class Enemy : MonoBehaviour
 
     public GameObject destroyEffect;
 
+    private MeshRenderer meshRenderer;
+    private Color originalColor;
+    private float colorResetTime = .1f;
+
+    private Image fillImage;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
+        originalColor = meshRenderer.material.color;
+        fillImage = transform.Find("Canvas").transform.Find("HealthBar").transform.Find("Base").transform.Find("Filler").GetComponent<Image>();
+        maxHealth = 100;
+        health = maxHealth;
     }
 
     // Update is called once per frame
@@ -49,13 +61,55 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        //TODO : We need a health mechanism
+        DamageEffect();
+
+        health = health - damage;
+        UpdateHealthBar();
+
+        if (health <= 0)
+        {
+            Dead();
+        }
+    }
+
+    public void Dead()
+    {
+        DeathEffect();
+        Destroy(gameObject);
+    }
+
+    public void DamageEffect()
+    {
+        meshRenderer.material.color = Color.red;
+        StartCoroutine(ResetColor(colorResetTime));
+    }
+
+    public void DeathEffect()
+    {
         GameObject destEffect = Instantiate(destroyEffect, transform.position, Quaternion.identity);
         Destroy(destEffect, 2f);
-        health = health - damage;
-        if(health<=0)
-        { Destroy(gameObject); }
-        //IF COndition for health
-        //If falls below 0 then do this
+    }
+
+    private IEnumerator ResetColor(float resetTime)
+    {
+        yield return new WaitForSecondsRealtime(resetTime);
+        meshRenderer.material.color = originalColor;
+    }
+
+    public void Regen(int regenAmount)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void UpdateHealthBar()
+    {
+        fillImage.fillAmount = GetHealthPercentage() / 100;
+    }
+
+    private float GetHealthPercentage()
+    {
+        //remainingPercentage = 
+        return ((100 / maxHealth) * health);
+        //return remainingPercentage;
     }
 }
