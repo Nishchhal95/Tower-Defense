@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
 
     private void SetupWeaponUI()
     {
-        for (int i = 0; i < _GameManager.Instance.weaponList.Count; i++)
+        for (int i = 0; i < WeaponManager.Instance.weaponList.Count; i++)
         {
             SpawWeaponUIItem(i);
         }
@@ -34,12 +34,12 @@ public class UIManager : MonoBehaviour
     {
         GameObject weaponUIItem = Instantiate(weaponUIItemPrefab, weaponUIListParent);
 
-        InitWeaponUI(weaponUIItem, index);
+        InitSelectionWeaponUI(weaponUIItem, index);
     }
 
-    private void InitWeaponUI(GameObject weaponUIItem, int index)
+    private void InitSelectionWeaponUI(GameObject weaponUIItem, int index)
     {
-        weaponUIItem.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => { _GameManager.Instance.selectedWeapon = _GameManager.Instance.weaponList[index]; });
-        weaponUIItem.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = _GameManager.Instance.weaponList[index].weaponName;
+        weaponUIItem.transform.GetChild(0).GetComponent<Button>().onClick.AddListener(() => { WeaponManager.Instance.SetSelectedWeapon(WeaponManager.Instance.weaponList[index]); });
+        weaponUIItem.transform.GetChild(0).transform.GetChild(0).GetComponent<Text>().text = WeaponManager.Instance.weaponList[index].weaponDetails.weaponName;
     }
 }

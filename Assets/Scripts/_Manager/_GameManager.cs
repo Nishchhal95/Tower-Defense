@@ -11,8 +11,6 @@ public class _GameManager : MonoBehaviour
 
     public Transform enemyHolder, weaponHolder, bulletHolder;
 
-    public List<Weapon> weaponList = new List<Weapon>();
-
     private void Awake()
     {
         if(Instance == null)
@@ -24,6 +22,16 @@ public class _GameManager : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+    private void OnEnable()
+    {
+        BlockManager.Instance.OnBlockSelected += BlockSelected;
+    }
+
+    private void OnDisable()
+    {
+        BlockManager.Instance.OnBlockSelected -= BlockSelected;
     }
 
     // Start is called before the first frame update
@@ -38,24 +46,14 @@ public class _GameManager : MonoBehaviour
         
     }
 
-    public void ClickedBlock(IWeaponPlaceable blockSelected)
+    private void BlockSelected(IWeaponPlaceable selectedBlock)
     {
-        Weapon selectedWeapon = GetSelectedWeapon();
+        Weapon selectedWeapon = WeaponManager.Instance.GetSelectedWeapon();
 
-        if(selectedWeapon != null)
+        if (selectedWeapon != null)
         {
-            blockSelected.PlaceWeapon(selectedWeapon);
+            selectedBlock.PlaceWeapon(selectedWeapon);
             selectedBlock = null;
         }
-    }
-
-    private Weapon GetSelectedWeapon()
-    {
-        return selectedWeapon;
-    }
-
-    public float GetWeaponHeight(Weapon weapon)
-    {
-        return weapon.transform.localScale.y;   
     }
 }

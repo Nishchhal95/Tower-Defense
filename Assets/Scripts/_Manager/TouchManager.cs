@@ -20,7 +20,7 @@ public class TouchManager : MonoBehaviour
 
         if(Input.GetMouseButtonUp(0))
         {
-            _GameManager.Instance.selectedBlock = null;
+            BlockManager.Instance.DeselectBlock();
         }
     }
 
@@ -32,13 +32,11 @@ public class TouchManager : MonoBehaviour
 
         if (hit.collider != null)
         {
-            _GameManager.Instance.selectedBlock = hit.collider.gameObject.GetComponent<IWeaponPlaceable>();
+            IWeaponPlaceable selectedBlock = hit.collider.gameObject.GetComponent<IWeaponPlaceable>();
 
-            if(_GameManager.Instance.selectedBlock != null)
+            if (selectedBlock != null)
             {
-                //We now have a Block Selected
-                //Debug.Log("I Hit " + hit.collider.gameObject.name);
-                _GameManager.Instance.ClickedBlock(_GameManager.Instance.selectedBlock);
+                BlockManager.Instance.SelectBlock(selectedBlock);
             }
         }
     }

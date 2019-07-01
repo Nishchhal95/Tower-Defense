@@ -8,12 +8,14 @@ public class Block : MonoBehaviour, ISelectable, IWeaponPlaceable
     private Weapon holdingWeapon = null;
 
     private Color originalColor;
+    private MeshRenderer meshRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         pointToPlaceWeapon = transform.position + new Vector3(0, transform.localScale.y / 2, 0);
-        originalColor = GetComponent<MeshRenderer>().material.color;
+        meshRenderer = GetComponent<MeshRenderer>();
+        originalColor = meshRenderer.material.color;
     }
 
     // Update is called once per frame
@@ -40,9 +42,11 @@ public class Block : MonoBehaviour, ISelectable, IWeaponPlaceable
             return;
         }
 
-        Vector3 weaponPos = pointToPlaceWeapon + new Vector3(0, _GameManager.Instance.GetWeaponHeight(weapon) / 2, 0);
+        Vector3 weaponPos = pointToPlaceWeapon + new Vector3(0, WeaponManager.Instance.GetWeaponHeight(weapon) / 2, 0);
 
         holdingWeapon = SpawnWeapon(weapon, weaponPos, Quaternion.identity);
+
+        //Calling it Just to Reset Selection Effect
         Select();
     }
 
@@ -50,7 +54,7 @@ public class Block : MonoBehaviour, ISelectable, IWeaponPlaceable
     {
         Weapon wp = Instantiate(weapon, pos, rot, _GameManager.Instance.weaponHolder);
 
-        wp.Spawning();
+        wp.Init();
 
         return wp;
     }
@@ -59,15 +63,15 @@ public class Block : MonoBehaviour, ISelectable, IWeaponPlaceable
     {
         if (holdingWeapon == null)
         {
-            this.GetComponent<MeshRenderer>().material.color = Color.green;
+            meshRenderer.material.color = Color.green;
             return;
         }
-        this.GetComponent<MeshRenderer>().material.color = Color.red;
+        meshRenderer.material.color = Color.red;
 
     }
 
     public void Deselect()
     {
-        this.GetComponent<MeshRenderer>().material.color = originalColor;
+        meshRenderer.material.color = originalColor;
     }
 }

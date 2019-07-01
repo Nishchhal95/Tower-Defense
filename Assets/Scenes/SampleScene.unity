@@ -7294,6 +7294,8 @@ GameObject:
   - component: {fileID: 797664159}
   - component: {fileID: 797664160}
   - component: {fileID: 797664161}
+  - component: {fileID: 797664162}
+  - component: {fileID: 797664163}
   m_Layer: 0
   m_Name: _GameManager
   m_TagString: Untagged
@@ -7357,14 +7359,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e98630b8f0e91046a771198fb16daa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedWeapon: {fileID: -2593194091178088301, guid: d9c5da9e1b0de8a4c8b392d3ff0b0711,
-    type: 3}
+  selectedWeapon: {fileID: 0}
   enemyHolder: {fileID: 1570354983}
   weaponHolder: {fileID: 442279304}
   bulletHolder: {fileID: 31863117}
+--- !u!114 &797664162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797664157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e397f8c35209c748b319f9baf29b5ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &797664163
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 797664157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5363fb2c8b55bc41a2765b4780b201a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedWeapon: {fileID: 0}
   weaponList:
-  - {fileID: -7617991474252789138, guid: fedbba69fa4256d47bb0dba20008090b, type: 3}
-  - {fileID: -2593194091178088301, guid: d9c5da9e1b0de8a4c8b392d3ff0b0711, type: 3}
+  - {fileID: 5961198297960033653, guid: fedbba69fa4256d47bb0dba20008090b, type: 3}
+  - {fileID: 4698188362668936341, guid: d9c5da9e1b0de8a4c8b392d3ff0b0711, type: 3}
 --- !u!1 &799735388
 GameObject:
   m_ObjectHideFlags: 0
